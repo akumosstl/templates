@@ -1,0 +1,30 @@
+# Feature Review Report: chart_update_after_load
+
+classification: REJECTED
+
+critical_issues:
+  - The feature does not specify a deterministic, testable contract for how chart line movement updates TableComponent data and the backend payload. The event flow, data mapping, and update triggers are not formalized, risking inconsistent agent behavior.
+  - The mapping between drag-and-drop (15x15 min) chart movement and the update of 'preferredStartTime' in both UI and backend payload is ambiguous. No business rules or constraints are defined for this mapping.
+  - The payload structure for the 'otimizar' endpoint is under-specified: required/optional fields, update logic, and error handling are not defined. Example payloads are informal and may be misinterpreted by agents.
+  - The roles and update mechanisms of '@Output() maneuversChange', 'maneuversRaw', and their synchronization are not explicitly defined, risking architectural drift and implementation errors.
+
+non_critical_issues:
+  - The feature assumes prior knowledge of component interactions and event flows, which is not guaranteed for downstream agents. This increases onboarding and maintenance risk.
+  - The backend and frontend data contracts are not versioned or formally described, risking future incompatibility.
+
+ambiguities:
+  - "Reflect correctly" is undefined: what constitutes correctness in TableComponent and backend payload is not stated.
+  - The relationship and synchronization rules between chart position, TableComponent data, and backend payload are not fully defined.
+  - The expected behavior when multiple lines are moved, or when invalid data is present, is not specified.
+
+implicit_assumptions:
+  - Assumes agents can infer how to update 'preferredStartTime' and related fields from chart movement without explicit rules.
+  - Assumes event emitters and data bindings are correctly implemented and synchronized, but provides no verification or enforcement mechanism.
+  - Assumes all required data is always present and valid, with no error or edge case handling described.
+
+improvement_suggestions:
+  - Explicitly define the mapping and business rules between chart movement and data model updates, including edge cases and constraints.
+  - Provide a formal, versioned contract for event emitters, TableComponent data updates, and backend payloads, including input/output formats and triggers.
+  - Specify deterministic, testable acceptance criteria and example test cases for correct synchronization and payload generation.
+  - Clarify all terms and expected behaviors, especially "reflect correctly", to remove ambiguity for downstream agents.
+  - Document error handling, validation, and edge case scenarios to ensure robust agent implementation.

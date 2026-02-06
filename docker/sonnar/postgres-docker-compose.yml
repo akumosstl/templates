@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:16-alpine # Use a compatible PostgreSQL version
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: sro
+      POSTGRES_PASSWORD: sro
+      POSTGRES_DB: sro
+    volumes:
+      - postgresql_data_16:/var/lib/postgresql/data
+    # This volume is also needed for base postgres images, though not strictly required by sonarqube
+      - postgresql_16:/var/lib/postgresql 
+    #networks:
+    #  - sonar-network
+
+volumes:
+  postgresql_data_16:
+  postgresql_16:
+
+#networks:
+ # sonar-network:
+ #   driver: bridge

@@ -1,0 +1,12 @@
+diff --git a/src/app/app.component.ts b/src/app/app.component.ts
+index 1e2b3c1..b2e3f4a 100644
+--- a/src/app/app.component.ts
++++ b/src/app/app.component.ts
+@@ ... @@
+   onManeuversChange(updatedManeuvers: ManeuverItem[]) {
+-    this.maneuversRaw = updatedManeuvers;
+-    this.cdr.detectChanges();
++    this.maneuversRaw = updatedManeuvers;
++    // Emit update to both chart and table by reassigning maneuversRaw (Angular will propagate to both)
++    this.cdr.detectChanges();
+   }

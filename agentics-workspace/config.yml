@@ -1,0 +1,15 @@
+feature:
+  path: C:\Users\MEUCOMPUTADOR\.agentic-workspace\portosantos\agentics\features\chart_update_after_load.md
+  
+java:
+  dev-status: C:\Users\MEUCOMPUTADOR\.agentic-workspace\portosantos\agentics\output\chart_update_after_load\java-dev-status.json
+
+angular:
+  dev-status: C:\Users\MEUCOMPUTADOR\.agentic-workspace\portosantos\agentics\output\chart_update_after_load\angular-dev-status.json
+  diff-status: C:\Users\MEUCOMPUTADOR\.agentic-workspace\portosantos\agentics\output\chart_update_after_load\angular-dev-diff.txt
+
+refinement:
+  refinement-status: C:\Users\MEUCOMPUTADOR\.agentic-workspace\portosantos\agentics\output\chart_update_after_load\refinement-status.yml
+
+output:
+  path: C:\Users\MEUCOMPUTADOR\.agentic-workspace\portosantos\agentics\output
