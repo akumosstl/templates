@@ -181,7 +181,7 @@ Native Method Libraries:
 
 Libraries written in other languages that are loaded and used by native methods through JNI.
 
-# ClassNotFound exception and NoClassDefFoundError
+# ClassNotFoundException and NoClassDefFoundError
 
 ***ClassNotFoundException and NoClassDefFoundError***
 
