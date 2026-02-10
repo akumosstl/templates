@@ -34,65 +34,13 @@ Responsible for loading, linking, and initializing class files.
 
 Finds and loads the binary representation of a class or interface based on its fully qualified name.
 
-Linking:
+***Linking***
 
 Verifies the loaded class, prepares it for execution, and resolves symbolic references.
 
-Initialization:
+***Initialization***
 
 Executes the static initializers of the class and initializes static fields to their default values.
-
-Memory Areas (Runtime Data Areas):
-
-These are created by the JVM during its execution to store data required for program execution.
-
-Method Area:
-
-Stores class-level data, including static variables, method code, and constant pool.
-
-Heap:
-
-Stores all objects and arrays created during program execution. This is where garbage collection primarily operates.
-
-Stack:
-
-Each thread has its own private JVM stack, which stores local variables, partial results, and method calls (frames).
-
-PC Registers:
-
-Each thread has a program counter register that stores the address of the currently executing JVM instruction.
-
-Native Method Stacks:
-
-Used for native methods (methods written in languages other than Java, like C/C++).
-
-Execution Engine:
-
-Responsible for executing the bytecode loaded by the classloader.
-
-Interpreter:
-
-Reads and executes bytecode instructions one by one.
-
-Just-In-Time (JIT) Compiler:
-
-Compiles frequently executed bytecode into native machine code during runtime to improve performance. It identifies "hot
-spots" in the code and compiles them for faster execution.
-
-Garbage Collector (GC):
-
-Automatically manages memory by identifying and deallocating objects that are no longer referenced by the program,
-preventing memory leaks.
-
-Native Method Interface (JNI):
-
-Allows Java code to interact with native applications and libraries written in other languages.
-
-Native Method Libraries:
-
-Libraries written in other languages that are loaded and used by native methods through JNI.
-
-***Classloaders***
 
 Java ClassLoaders are a fundamental component of the Java Virtual Machine (JVM) responsible for dynamically loading Java
 classes into memory at runtime. They enable the JVM to locate, load, and link class definitions from various sources,
@@ -180,6 +128,58 @@ Custom ClassLoaders are useful for scenarios like:
 Loading classes from non-standard locations (databases, networks, encrypted files).
 Implementing plugin architectures where different plugins might have conflicting dependencies.
 Dynamically loading and unloading classes at runtime.
+
+# JDK Internals
+
+***Memory Areas (Runtime Data Areas)***
+
+These are created by the JVM during its execution to store data required for program execution.
+
+***Method Area***
+
+Stores class-level data, including static variables, method code, and constant pool.
+
+***Heap***
+
+Stores all objects and arrays created during program execution. This is where garbage collection primarily operates.
+
+***Stack***
+
+Each thread has its own private JVM stack, which stores local variables, partial results, and method calls (frames).
+
+***PC Registers***
+
+Each thread has a program counter register that stores the address of the currently executing JVM instruction.
+
+***Native Method Stacks***
+
+Used for native methods (methods written in languages other than Java, like C/C++).
+
+***Execution Engine***
+
+Responsible for executing the bytecode loaded by the classloader.
+
+***Interpreter***
+
+Reads and executes bytecode instructions one by one.
+
+***Just-In-Time (JIT) Compiler***
+
+Compiles frequently executed bytecode into native machine code during runtime to improve performance. It identifies "hot
+spots" in the code and compiles them for faster execution.
+
+***Garbage Collector (GC)***
+
+Automatically manages memory by identifying and deallocating objects that are no longer referenced by the program,
+preventing memory leaks.
+
+***Native Method Interface (JNI)***
+
+Allows Java code to interact with native applications and libraries written in other languages.
+
+Native Method Libraries:
+
+Libraries written in other languages that are loaded and used by native methods through JNI.
 
 # ClassNotFound exception and NoClassDefFoundError
 
