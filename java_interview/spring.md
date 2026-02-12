@@ -411,6 +411,26 @@ prototype) without modifying the class itself, whereas changing a Java singleton
 Testing: Spring singletons are generally easier to test because they can be mocked or replaced within the Spring
 context, unlike tightly coupled Java singletons.
 
+# Diff: @Controller & @RestController?
+
+The key difference between @Controller and @RestController in Spring lies in their intended use and how they handle the response body.<br>
+@Controller:<br>
+Used in traditional Spring MVC applications where the controller's primary role is to prepare data and return a view (
+e.g., an HTML page rendered by a templating engine like Thymeleaf or JSP).
+If a method within a @Controller needs to return raw data (like JSON or XML) directly in the response body, it must be
+explicitly annotated with @ResponseBody.
+@RestController:
+A specialized version of @Controller specifically designed for building RESTful web services.
+It is a convenience annotation that combines the functionality of @Controller and @ResponseBody. This means that every
+method within a class annotated with @RestController automatically serializes its return value into the response body (
+typically as JSON or XML), eliminating the need to add @ResponseBody to each method.
+@RestController is ideal for creating APIs that primarily serve data to client applications (e.g., single-page
+applications, mobile apps) rather than rendering full web pages.
+In summary, choose @Controller when you need to return views in a traditional MVC application, and use @RestController
+when building REST APIs that primarily return raw data directly in the response body.
+
+
+
 8) What is dependency injection and the types? When to use Setter and when to use Constructor dependency injection.
 9) What do you understand by auto wiring and name the different modes of it?
 10) What’s the difference between @Component, @Controller, @Repository & @Service
@@ -423,3 +443,5 @@ context, unlike tightly coupled Java singletons.
 15) How to Inject Prototype Scoped Bean in Singleton Bean so that the injected bean should behave like Prototype instead
     of outer Singleton bean.
 16) Usage of ApplicationContextAware?
+
+
