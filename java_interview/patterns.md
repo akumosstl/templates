@@ -1,18 +1,17 @@
 # Design Pattern:
+Design Patterns
 
-## Explain the Creational, Structural and Behavioural design patterns?
+# Creational, Structural and Behavioural
 
-Design patterns in Java are categorized into three main types: Creational, Structural, and Behavioral. Each category
-addresses a different aspect of object-oriented design.
+Design patterns in Java are categorized into three main types: Creational, Structural, and Behavioral. Each category addresses a different aspect of object-oriented design.<br>
 
-**1. Creational Design Patterns**
+# Creational Design Patterns
 
-These patterns deal with object creation mechanisms, aiming to create objects in a manner suitable for the situation
-while making the system independent of how its objects are created, composed, and represented.
+These patterns deal with object creation mechanisms, aiming to create objects in a manner suitable for the situation while making the system independent of how its objects are created, composed, and represented.<br>
 
-**Types**: Singleton, Factory Method, Abstract Factory, Builder, Prototype.
+**Types**: Singleton, Factory Method, Abstract Factory, Builder, Prototype.<br>
 
-Example (Singleton): Ensures a class has only one instance and provides a global point of access to it.
+Example (Singleton): Ensures a class has only one instance and provides a global point of access to it.<br>
 
 ```Java
 
@@ -32,14 +31,13 @@ public class Singleton {
 }
 ```
 
-**2. Structural Design Patterns**
+# Structural Design Patterns
 
-These patterns deal with object composition and relationships between objects, simplifying the structure of classes and
-objects and improving flexibility.
+These patterns deal with object composition and relationships between objects, simplifying the structure of classes and objects and improving flexibility.<br>
 
-**Types**: Adapter, Decorator, Facade, Composite, Bridge, Proxy, Flyweight.
+**Types**: Adapter, Decorator, Facade, Composite, Bridge, Proxy, Flyweight.<br>
 
-Example (Adapter): Allows incompatible interfaces to work together by converting one interface into another.
+Example (Adapter): Allows incompatible interfaces to work together by converting one interface into another.<br>
 
 ```Java
 
@@ -70,16 +68,13 @@ class UsToEuropeanAdapter implements EuropeanSocket {
 }
 ```
 
-**3. Behavioral Design Patterns:**
+# Behavioral Design Patterns
 
-These patterns focus on communication between objects and the assignment of responsibilities, managing how objects
-interact to make the system more efficient and easier to modify.
+These patterns focus on communication between objects and the assignment of responsibilities, managing how objects interact to make the system more efficient and easier to modify.<br>
 
-**Types**: Observer, Strategy, Command, Template Method, Iterator, State, Chain of Responsibility, Mediator, Memento,
-Visitor.
+**Types**: Observer, Strategy, Command, Template Method, Iterator, State, Chain of Responsibility, Mediator, Memento, Visitor.<br>
 
-Example (Observer): Defines a one-to-many dependency between objects so that when one object changes state, all its
-dependents are notified and updated automatically.
+Example (Observer): Defines a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.<br>
 
 ```Java
 
@@ -121,21 +116,17 @@ class ConcreteObserver implements Observer {
 }
 ```
 
-## With use case, explain at least one design pattern from Creational, Structural & Behavioural types.
+# Use Cases
 
-Here are explanations of one design pattern from each of the Creational, Structural, and Behavioral categories,
-including a use case for each:
+Here are explanations of one design pattern from each of the Creational, Structural, and Behavioral categories, including a use case for each:<br>
 
-**Creational**: Singleton Pattern
+**Creational**: Singleton Pattern<br>
 
-The Singleton pattern ensures that a class has only one instance and provides a global point of access to that instance.
+The Singleton pattern ensures that a class has only one instance and provides a global point of access to that instance.<br>
 
-**Use Case**: A configuration manager for an application.
+**Use Case**: A configuration manager for an application.<br>
 
-Imagine an application that needs to load various configuration settings from a file or database. It is crucial to
-ensure that only one instance of the configuration manager exists throughout the application's lifecycle to maintain
-consistency and avoid conflicting settings. The Singleton pattern ensures this by providing a single, globally
-accessible instance of the ConfigurationManager class.
+Imagine an application that needs to load various configuration settings from a file or database. It is crucial to ensure that only one instance of the configuration manager exists throughout the application's lifecycle to maintain consistency and avoid conflicting settings. The Singleton pattern ensures this by providing a single, globally accessible instance of the ConfigurationManager class.<br>
 
 ```Java
 
@@ -169,17 +160,13 @@ public class ConfigurationManager {
 }
 ```
 
-**Structural**: Adapter Pattern
+**Structural**: Adapter Pattern<br>
 
-The Adapter pattern allows incompatible interfaces to work together. It acts as a wrapper, converting the interface of
-one class into another interface that clients expect.
+The Adapter pattern allows incompatible interfaces to work together. It acts as a wrapper, converting the interface of one class into another interface that clients expect.<br>
 
-**Use Case**: Integrating a new payment gateway into an existing e-commerce platform.
+**Use Case**: Integrating a new payment gateway into an existing e-commerce platform.<br>
 
-Consider an e-commerce platform that currently uses a specific payment gateway with its own API. If the platform needs
-to integrate a new payment gateway with a different API, the Adapter pattern can be used. An PaymentGatewayAdapter can
-be created to translate the calls from the existing platform's payment interface to the new gateway's specific API,
-allowing the platform to seamlessly use the new gateway without modifying its core payment processing logic.
+Consider an e-commerce platform that currently uses a specific payment gateway with its own API. If the platform needs to integrate a new payment gateway with a different API, the Adapter pattern can be used. An PaymentGatewayAdapter can be created to translate the calls from the existing platform's payment interface to the new gateway's specific API, allowing the platform to seamlessly use the new gateway without modifying its core payment processing logic.<br>
 
 ```Java
 
@@ -210,17 +197,13 @@ public class PaymentGatewayAdapter implements OldPaymentGateway {
 }
 ```
 
-**Behavioral**: Strategy Pattern
+**Behavioral**: Strategy Pattern<br>
 
-The Strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. It allows
-the algorithm to vary independently from the clients that use it.
+The Strategy pattern defines a family of algorithms, encapsulates each one, and makes them interchangeable. It allows the algorithm to vary independently from the clients that use it.<br>
 
-**Use Case**: Implementing different sorting algorithms in a data processing application.
+**Use Case**: Implementing different sorting algorithms in a data processing application.<br>
 
-Imagine a data processing application that needs to sort a list of items. Depending on the size of the data, performance
-requirements, or specific data characteristics, different sorting algorithms (e.g., Bubble Sort, Quick Sort, Merge Sort)
-might be more suitable. The Strategy pattern allows defining these sorting algorithms as separate strategies and
-dynamically choosing which one to use at runtime.
+Imagine a data processing application that needs to sort a list of items. Depending on the size of the data, performance requirements, or specific data characteristics, different sorting algorithms (e.g., Bubble Sort, Quick Sort, Merge Sort) might be more suitable. The Strategy pattern allows defining these sorting algorithms as separate strategies and dynamically choosing which one to use at runtime.<br>
 
 ```Java
 
@@ -261,29 +244,25 @@ public class DataSorter {
 }
 ```
 
-## What is the best way to implement Singleton Design Pattern?
+# What is the best way to implement Singleton Design Pattern?
 
-The best way to implement the Singleton Design Pattern involves a private constructor, a private static final instance
-of the class, and a public static getInstance() method, with the most robust, modern approach often being the Bill Pugh
-Singleton (using a static inner class) for thread safety and lazy loading.
+The best way to implement the Singleton Design Pattern involves a private constructor, a private static final instance of the class, and a public static getInstance() method, with the most robust, modern approach often being the Bill Pugh Singleton (using a static inner class) for thread safety and lazy loading.<br>
 
-## What it is solid?
+# What it is solid?
 
-SOLID in Java refers to a set of five object-oriented design principles that aim to make software designs more
-understandable, flexible, and maintainable. These principles are:
+SOLID in Java refers to a set of five object-oriented design principles that aim to make software designs more understandable, flexible, and maintainable. These principles are:<br>
 
-S: ingle Responsibility Principle (SRP)
-O: pen/Closed Principle (OCP)
-L: iskov Substitution Principle (LSP)
-I: nterface Segregation Principle (ISP)
-D: ependency Inversion Principle (DIP)
+S: ingle Responsibility Principle (SRP)<br>
+O: pen/Closed Principle (OCP)<br>
+L: iskov Substitution Principle (LSP)<br>
+I: nterface Segregation Principle (ISP)<br>
+D: ependency Inversion Principle (DIP)<br>
 
-Here's an example illustrating the Single Responsibility Principle (SRP), which states that a class should have only one
-reason to change, meaning it should have only one responsibility.
+Here's an example illustrating the Single Responsibility Principle (SRP), which states that a class should have only one reason to change, meaning it should have only one responsibility.<br>
 
-Example: Violating SRP
+Example: Violating SRP<br>
 
-Consider a BankService class that handles multiple functionalities:
+Consider a BankService class that handles multiple functionalities:<br>
 
 ```Java
 
@@ -315,12 +294,9 @@ class BankService {
 }
 ```
 
-This BankService class violates SRP because it has multiple responsibilities: managing transactions, handling passbook
-printing, providing loan information, and sending notifications. If the logic for sending OTP changes, or the loan
-interest calculation method needs modification, or the passbook printing format is updated, this single BankService
-class would need to be changed for different reasons.
+This BankService class violates SRP because it has multiple responsibilities: managing transactions, handling passbook printing, providing loan information, and sending notifications. If the logic for sending OTP changes, or the loan interest calculation method needs modification, or the passbook printing format is updated, this single BankService class would need to be changed for different reasons.<br>
 
-Example: Adhering to SRP
+Example: Adhering to SRP<br>
 
 To adhere to SRP, these responsibilities should be separated into distinct classes:
 
@@ -361,38 +337,27 @@ class NotificationService {
 ```
 
 Now, each class has a single, well-defined responsibility, making the code more organized, easier to understand, and
-less prone to issues when changes are required in one specific area.
+less prone to issues when changes are required in one specific area.<br>
 
-## What are different design principles? Can you specify any 4 design principles apart from the SOLID design principles?
+## Beyond SOLID
 
-Design principles are fundamental guidelines for creating effective compositions, covering visual aspects like balance,
-contrast, emphasis, rhythm, unity, repetition, and movement, while software design principles, beyond SOLID, include
-concepts like DRY, KISS, YAGNI, focusing on code clarity, maintainability, and avoiding redundancy, such as the Gang of
-Four (GoF) patterns (Adapter, Facade) and DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid), YAGNI (You Ain't
-Gonna Need It), and Law of Demeter.
+Beyond SOLID, include concepts like DRY, KISS, YAGNI, focusing on code clarity, maintainability, and avoiding redundancy, such as the Gang of Four (GoF) patterns (Adapter, Facade) and DRY (Don't Repeat Yourself), KISS (Keep It Simple, Stupid), YAGNI (You Ain't Gonna Need It), and Law of Demeter.<br>
 
 **4 Design Principles (Non-SOLID)**
 
-**DRY (Don't Repeat Yourself)**: A principle in software development stating that "Every piece of knowledge must have a
-single, unambiguous, authoritative representation within a system". This means avoiding duplicate code for easier
-maintenance and fewer bugs.
+**DRY (Don't Repeat Yourself)**: A principle in software development stating that "Every piece of knowledge must have a single, unambiguous, authoritative representation within a system". This means avoiding duplicate code for easier maintenance and fewer bugs.<br>
 
-**KISS (Keep It Simple, Stupid)**: Advocates for simplicity in design, suggesting that most systems work best if they
-are kept simple rather than made complex. Simpler solutions are often more reliable and easier to understand.
+**KISS (Keep It Simple, Stupid)**: Advocates for simplicity in design, suggesting that most systems work best if they are kept simple rather than made complex. Simpler solutions are often more reliable and easier to understand.<br>
 
-**YAGNI (You Ain't Gonna Need It)**: A principle from Extreme Programming (XP) that says a developer should not add
-functionality until it is actually needed. This prevents over-engineering and building features that might never be
-used.
+**YAGNI (You Ain't Gonna Need It)**: A principle from Extreme Programming (XP) that says a developer should not add functionality until it is actually needed. This prevents over-engineering and building features that might never be used.<br>
 
-**Law of Demeter (LoD)**: Also known as the Principle of Least Knowledge, it states that an object should only talk to
-its immediate friends (objects it was created with, passed to it, or that are its direct components), reducing coupling.
+**Law of Demeter (LoD)**: Also known as the Principle of Least Knowledge, it states that an object should only talk to its immediate friends (objects it was created with, passed to it, or that are its direct components), reducing coupling.<br>
 
-## Give example of decorator design pattern in Java? Does it operate on object level or class level?
+# Give example of decorator design pattern in Java? Does it operate on object level or class level?
 
-The Decorator design pattern is a structural pattern that allows adding new functionalities to an object dynamically
-without altering its structure. It operates at the object level.
+The Decorator design pattern is a structural pattern that allows adding new functionalities to an object dynamically without altering its structure. It operates at the object level.<br>
 
-Here's an example in Java using a coffee shop scenario:
+Here's an example in Java using a coffee shop scenario:<br>
 
 ```Java
 
@@ -486,77 +451,57 @@ public class CoffeeShop {
 }
 ```
 
-## What is façade design pattern and its usage?
+# What is façade design pattern and its usage?
 
-The Facade design pattern provides a simplified, unified interface to a complex subsystem of classes, acting as a single
-entry point that hides internal implementation details and makes the system easier to use and maintain, much like a
-building's front (facade) hides its complex structure. Its usage involves reducing complexity for clients, enabling
-easier interaction with large libraries or frameworks, abstracting platform specifics, and improving code cleanliness
-and testability by offering a high-level, cohesive view of functionality.
+The Facade design pattern provides a simplified, unified interface to a complex subsystem of classes, acting as a single entry point that hides internal implementation details and makes the system easier to use and maintain, much like a building's front (facade) hides its complex structure. Its usage involves reducing complexity for clients, enabling easier interaction with large libraries or frameworks, abstracting platform specifics, and improving code cleanliness and testability by offering a high-level, cohesive view of functionality.<br>
 
-**How it Works**
+**How it Works**<br>
 
-**Single Entry Point**: A facade class encapsulates many underlying classes and methods, presenting a simpler API.
+**Single Entry Point**: A facade class encapsulates many underlying classes and methods, presenting a simpler API.<br>
 
-**Hides Complexity**: Clients interact only with the facade, unaware of the many steps or classes involved in the
-complex subsystem.
+**Hides Complexity**: Clients interact only with the facade, unaware of the many steps or classes involved in the complex subsystem.<br>
 
-**Decouples Client**: It reduces tight coupling between the client code and the intricate subsystem, making changes
-easier.
+**Decouples Client**: It reduces tight coupling between the client code and the intricate subsystem, making changes easier.<br>
 
-**Key Usages & Benefits**
+**Key Usages & Benefits**<br>
 
-Simplifying Libraries/Frameworks: Makes complex APIs (like database management, file systems, networking) more
-accessible.
+Simplifying Libraries/Frameworks: Makes complex APIs (like database management, file systems, networking) more accessible.<br>
 
 **System Initialization**: Handles complex setup and configuration within a single call.
-Microservices & APIs: An API gateway or a dedicated service can act as a facade to orchestrate calls to multiple
-microservices.
+Microservices & APIs: An API gateway or a dedicated service can act as a facade to orchestrate calls to multiple microservices.<br>
 
-**Cross-Platform Development**: Abstracts platform-specific differences (iOS, Android) into a unified interface.
+**Cross-Platform Development**: Abstracts platform-specific differences (iOS, Android) into a unified interface.<br>
 
-**Testing**: Facilitates unit testing by allowing facades to be mocked or stubbed, isolating the code under test.
+**Testing**: Facilitates unit testing by allowing facades to be mocked or stubbed, isolating the code under test.<br>
 
-**Code Organization**: Keeps business logic clean by separating it from complex infrastructure code.
-Real-World Analogy
+**Code Organization**: Keeps business logic clean by separating it from complex infrastructure code. Real-World Analogy.<br>
 
-**Restaurant**: A waiter (facade) takes your simple order (menu item), hiding the complex process of the kitchen (
-subsystem) to cook the food.
+**Restaurant**: A waiter (facade) takes your simple order (menu item), hiding the complex process of the kitchen ( subsystem) to cook the food.<br>
 
-## What is flyweight design pattern and where is it used in JAVA API? (String Memory allocation).
+# What is flyweight design pattern and where is it used in JAVA API?
 
-The Flyweight design pattern is a structural pattern focused on minimizing memory usage by sharing common parts of
-object state among multiple objects. It achieves this by separating an object's state into two categories:
+The Flyweight design pattern is a structural pattern focused on minimizing memory usage by sharing common parts of object state among multiple objects. It achieves this by separating an object's state into two categories:<br>
 
-**Intrinsic State**: This is the immutable, shared state that can be reused across many flyweight objects. It's stored
-within the flyweight object itself.
+**Intrinsic State**: This is the immutable, shared state that can be reused across many flyweight objects. It's stored within the flyweight object itself.<br>
 
-**Extrinsic State**: This is the mutable, context-specific state that cannot be shared. It's passed to the flyweight's
-methods as needed, rather than being stored within the flyweight object.
+**Extrinsic State**: This is the mutable, context-specific state that cannot be shared. It's passed to the flyweight's methods as needed, rather than being stored within the flyweight object.<br>
 
-**Where it's used in Java API (String Memory Allocation)**
+**Where it's used in Java API (String Memory Allocation)**<br>
 
-The most prominent example of the Flyweight pattern in the Java API related to memory allocation is the String Pool.
+The most prominent example of the Flyweight pattern in the Java API related to memory allocation is the String Pool.<br>
 
-String Pool and Flyweight: When you create String literals in Java (e.g., String s = "hello";), the Java Virtual
-Machine (JVM) checks the String Pool. If a String with the same value already exists in the pool, a reference to that
-existing String object is returned instead of creating a new one. This shared String object acts as the "flyweight."
+String Pool and Flyweight: When you create String literals in Java (e.g., String s = "hello";), the Java Virtual Machine (JVM) checks the String Pool. If a String with the same value already exists in the pool, a reference to that existing String object is returned instead of creating a new one. This shared String object acts as the "flyweight."<br>
 
-Intrinsic and Extrinsic State in Strings:
+Intrinsic and Extrinsic State in Strings:<br>
 
-Intrinsic State: The actual character data of the String (e.g., "hello") is the intrinsic state, which is shared and
-immutable.
+Intrinsic State: The actual character data of the String (e.g., "hello") is the intrinsic state, which is shared and immutable.<br>
 
-Extrinsic State: While Strings themselves are immutable, if you consider scenarios where String objects are part of a
-larger context (like a list of names for different users), the user-specific data associated with each name would be the
-extrinsic state.
+Extrinsic State: While Strings themselves are immutable, if you consider scenarios where String objects are part of a larger context (like a list of names for different users), the user-specific data associated with each name would be the extrinsic state.<br>
 
-Integer Caching (Autoboxing).
-While not directly part of the String class, the Integer wrapper class in Java also utilizes a form of Flyweight
-pattern. When autoboxing occurs for Integer values between -128 and 127 (inclusive), the JVM caches these Integer
-objects. This means that if you create multiple Integer objects with the same value within this range, they will often
-refer to the same cached instance, saving memory.
-Java
+Integer Caching (Autoboxing).<br>
+While not directly part of the String class, the Integer wrapper class in Java also utilizes a form of Flyweight pattern. When autoboxing occurs for Integer values between -128 and 127 (inclusive), the JVM caches these Integer objects. This means that if you create multiple Integer objects with the same value within this range, they will often refer to the same cached instance, saving memory.<br>
+
+```java
 
     Integer i1 = 100; // Autoboxing, uses cached Integer
     Integer i2 = 100; // Autoboxing, uses the same cached Integer
@@ -565,14 +510,11 @@ Java
 
     System.out.println(i1 == i2); // true
     System.out.println(i3 == i4); // false (typically)
+```
 
-In summary, the Flyweight pattern, or principles similar to it, are used in the Java API to optimize memory usage,
-particularly in the handling of String literals through interning and in the caching of Integer objects during
-autoboxing.
+In summary, the Flyweight pattern, or principles similar to it, are used in the Java API to optimize memory usage, particularly in the handling of String literals through interning and in the caching of Integer objects during autoboxing.<br>
 
-Benefits in String Memory Allocation:
+Benefits in String Memory Allocation:<br>
 
-By utilizing the String Pool and the Flyweight pattern, Java significantly reduces memory consumption by avoiding the
-creation of duplicate String objects, especially in applications that frequently use the same String literals. This
-optimizes memory usage and can improve performance by reducing garbage collection overhead.
+By utilizing the String Pool and the Flyweight pattern, Java significantly reduces memory consumption by avoiding the creation of duplicate String objects, especially in applications that frequently use the same String literals. This optimizes memory usage and can improve performance by reducing garbage collection overhead.<br>
 
