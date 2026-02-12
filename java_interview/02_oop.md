@@ -4,25 +4,19 @@ Java OOP principles.
 
 # Aggregation and Composition
 
-a. with two given classes A & B, how will you implement aggregation and composition programmatically?
+a. Given two classes A & B, how will you implement aggregation and composition programmatically?<br>
 
-**"Is-A" Relationship (Inheritance)**
+**"Is-A" Relationship (Inheritance)**<br>
 
-This represents a relationship where one class is a specialized type of another class. It signifies that a subclass *"is
-a"* type of its superclass. For example, a Car *"is a"* Vehicle, or a Dog *"is an"* Animal. This relationship is
-implemented using the extends keyword in Java.
+This represents a relationship where one class is a specialized type of another class. It signifies that a subclass *"is a"* type of its superclass. For example, a Car *"is a"* Vehicle, or a Dog *"is an"* Animal. This relationship is implemented using the extends keyword in Java.<br>
 
-**"Has-A" Relationship (Composition/Aggregation)**
+**"Has-A" Relationship (Composition/Aggregation)**<br>
 
-This represents a relationship where one class contains or *"has"* an instance of another class as a member. It
-signifies that an object of one class is composed of or contains an object of another class. For example, a Car *"has
-an"* Engine, or a Library *"has"* Books. This relationship is implemented by creating an instance of one class within
-another as a field.
+This represents a relationship where one class contains or *"has"* an instance of another class as a member. It signifies that an object of one class is composed of or contains an object of another class. For example, a Car *"has an"* Engine, or a Library *"has"* Books. This relationship is implemented by creating an instance of one class within another as a field.<br>
 
-**Aggregation (Weak "has-a" relationship)**
+**Aggregation (Weak "has-a" relationship)**<br>
 
-In aggregation, class A *"has a"* B, but B can exist independently of A. This is typically implemented by passing an
-instance of B to A's constructor or a setter method.
+In aggregation, class A *"has a"* B, but B can exist independently of A. This is typically implemented by passing an instance of B to A's constructor or a setter method.<br>
 
 ```java
 
@@ -72,10 +66,9 @@ public class AggregationExample {
 
 ```
 
-**Composition (Strong "part-of" relationship)**
+**Composition (Strong "part-of" relationship)**<br>
 
-In composition, class B is an integral *"part of"* class A, and B's lifecycle is dependent on A's. B objects are
-typically created within A's constructor or methods, and their existence is tied to A's.
+In composition, class B is an integral *"part of"* class A, and B's lifecycle is dependent on A's. B objects are typically created within A's constructor or methods, and their existence is tied to A's.<br>
 
 ```java
 
@@ -124,58 +117,48 @@ public class CompositionExample {
 
 ```
 
-# Immutable classes
+# Immutable classes<br>
 
-a. Why String is immutable?
-b. Unmodifiable vs Immutable collections.
-c. How can you make immutable classes?
-d. non-immutable objects under immutable class and if that non-immutable class further contains non-immutable objects
-inside it. What will be your approach to make the classes immutable in such cases?
-e. Examples from JDK APIs.
+a. Why String is immutable?<br>
+b. How can you make immutable classes?<br>
+c. non-immutable objects under immutable class and if that non-immutable class further contains non-immutable objects inside it. What will be your approach to make the classes immutable in such cases?<br>
+d. Examples from JDK APIs.<br>
 
-An immutable class in Java is a class whose instances cannot be modified after they are created. Once an object of an
-immutable class is initialized, its internal state remains constant throughout its lifetime. Any operation that appears
-to "change" an immutable object actually results in the creation of a new object with the modified state, leaving the
-original object untouched.
+An immutable class in Java is a class whose instances cannot be modified after they are created. Once an object of an immutable class is initialized, its internal state remains constant throughout its lifetime. Any operation that appears to "change" an immutable object actually results in the creation of a new object with the modified state, leaving the original object untouched.<br>
 
-***Key characteristics of immutable classes***
+***Key characteristics of immutable classes***<br>
 
-1 - No setter methods:
+1 - No setter methods:<br>
 
-There are no public methods to change the object's fields after construction.
+There are no public methods to change the object's fields after construction.<br>
 
-2 - All fields are final:
+2 - All fields are final:<br>
 
-This ensures that the fields can only be initialized once, typically in the constructor.
+This ensures that the fields can only be initialized once, typically in the constructor.<br>
 
-3 - All fields are private:
+3 - All fields are private:<br>
 
-This prevents direct access and modification of the internal state.
+This prevents direct access and modification of the internal state.<br>
 
-3 - The class itself is final:
+3 - The class itself is final:<br>
 
-This prevents subclassing, which could potentially introduce mutable behavior.
+This prevents subclassing, which could potentially introduce mutable behavior.<br>
 
-4 - Defensive copying of mutable components:***
+4 - Defensive copying of mutable components:***<br>
 
-If the class contains references to mutable objects (e.g., Date objects or collections), the constructor and getter
-methods must perform deep copies to ensure that external modifications to these mutable objects do not affect the
-immutable object's state.
+If the class contains references to mutable objects (e.g., Date objects or collections), the constructor and getter methods must perform deep copies to ensure that external modifications to these mutable objects do not affect the immutable object's state.<br>
 
-5 -Initialize all fields in a parameterized constructor:
+5 -Initialize all fields in a parameterized constructor:<br>
 
-The constructor is the sole point for setting the initial values of the final fields.
+The constructor is the sole point for setting the initial values of the final fields.<br>
 
-***Examples from JDK APIs:***
+***Examples from JDK APIs:***<br>
 
-Several core Java Development Kit (JDK) classes are designed as immutable, leveraging the benefits of immutability, such
-as thread safety and predictable behavior.
+Several core Java Development Kit (JDK) classes are designed as immutable, leveraging the benefits of immutability, such as thread safety and predictable behavior.<br>
 
-***java.lang.String:***
+***java.lang.String:***<br>
 
-The String class is the most prominent example of an immutable class in Java. When you perform operations like concat()
-or replace() on a String, a new String object is created with the modified content, while the original String object
-remains unchanged.
+The String class is the most prominent example of an immutable class in Java. When you perform operations like concat() or replace() on a String, a new String object is created with the modified content, while the original String object remains unchanged.<br>
 
 ```java
 
@@ -192,8 +175,7 @@ println(modified); // Output: Hello World
 
 ***Primitive Wrapper Classes:***
 
-All primitive wrapper classes, such as Integer, Long, Boolean, Character, Double, Float, Byte, and Short, are immutable.
-Once an instance of these classes is created, its value cannot be changed.
+All primitive wrapper classes, such as Integer, Long, Boolean, Character, Double, Float, Byte, and Short, are immutable. Once an instance of these classes is created, its value cannot be changed.<br>
 
 ```Java
 
@@ -210,9 +192,7 @@ println(num2); // Output: 15
 
 ***Date and Time API (JSR 310):***
 
-Classes introduced in Java 8's new Date and Time API, such as LocalDate, LocalTime, LocalDateTime, ZonedDateTime, and
-Instant, are all immutable. Methods that appear to modify these objects (e.g., plusDays(), minusHours()) actually return
-new instances.
+Classes introduced in Java 8's new Date and Time API, such as LocalDate, LocalTime, LocalDateTime, ZonedDateTime, and Instant, are all immutable. Methods that appear to modify these objects (e.g., plusDays(), minusHours()) actually return new instances.<br>
 
 ```Java
 
@@ -229,91 +209,65 @@ println(tomorrow); // Output: 2025-12-04
 
 Examples of why immutable objects are good
 
-1 -Security:
+1 -Security:<br>
 
-Strings are frequently used in security-sensitive operations, such as file paths, network connections, and database
-queries. If strings were mutable, a malicious actor could potentially modify a string after it has been validated but
-before it is used, leading to security vulnerabilities. Immutability ensures that the string's value remains constant
-once created, preventing such attacks.
+Strings are frequently used in security-sensitive operations, such as file paths, network connections, and database queries. If strings were mutable, a malicious actor could potentially modify a string after it has been validated but before it is used, leading to security  vulnerabilities. Immutability ensures that the string's value remains constant once created, preventing such attacks.<br>
 
-2 - Thread Safety:
+2 - Thread Safety:<br>
 
-Immutable objects are inherently thread-safe because their state cannot be modified by multiple threads concurrently.
-This eliminates the need for explicit synchronization mechanisms when sharing String objects across threads, simplifying
-concurrent programming and reducing the risk of data corruption.
+Immutable objects are inherently thread-safe because their state cannot be modified by multiple threads concurrently. This eliminates the need for explicit synchronization mechanisms when sharing String objects across threads, simplifying concurrent programming and reducing the risk of data corruption.<br>
 
-3 - String Pool Optimization:
+3 - String Pool Optimization:<br>
 
-Java utilizes a "String Pool" (a special memory area in the heap) to store string literals. When a string literal is
-created, the JVM first checks if an identical string already exists in the pool. If so, it returns a reference to the
-existing string, avoiding the creation of a new object and saving memory. Immutability is crucial for this optimization,
-as it guarantees that shared string objects will not be inadvertently modified by one reference, affecting others.
+Java utilizes a "String Pool" (a special memory area in the heap) to store string literals. When a string literal iscreated, the JVM first checks if an identical string already exists in the pool. If so, it returns a reference to the existing string, avoiding the creation of a new object and saving memory. Immutability is crucial for this optimization, as it guarantees that shared string objects will not be inadvertently modified by one reference, affecting others.<br>
 
-4 - Caching Hash Codes:
+4 - Caching Hash Codes:<br>
 
-String objects are frequently used as keys in hash-based collections like HashMap. Since a string's content cannot
-change, its hashCode() can be calculated once when the object is created and then cached. This cached hash code can be
-reused in subsequent operations, providing a performance boost, as recalculating the hash code for mutable objects would
-be necessary each time.
+String objects are frequently used as keys in hash-based collections like HashMap. Since a string's content cannot change, its hashCode() can be calculated once when the object is created and then cached. This cached hash code can be reused in subsequent operations, providing a performance boost, as recalculating the hash code for mutable objects would be necessary each time.<br>
 
-5 - Predictability and Reliability:
+5 - Predictability and Reliability:<br>
 
-Immutability makes String objects more predictable and reliable. Developers can be confident that a String object's
-value will not change unexpectedly, simplifying code reasoning and debugging.
-When a String appears to be modified (e.g., using concat(), replace(), or the + operator), a new String object is
-actually created with the modified content, and the original String object remains unchanged. The variable then points
-to this new String object.
+Immutability makes String objects more predictable and reliable. Developers can be confident that a String object's value will not change unexpectedly, simplifying code reasoning and debugging. When a String appears to be modified (e.g., using concat(), replace(), or the + operator), a new String object is actually created with the modified content, and the original String object remains unchanged. The variable then points to this new String object.<br>
 
-# Unmodifiable vs Immutable collections
+# Unmodifiable vs Immutable collections<br>
 
-In Java, the distinction between unmodifiable and truly immutable collections lies in how they handle changes to their
-underlying data.
+In Java, the distinction between unmodifiable and truly immutable collections lies in how they handle changes to their underlying data.<br>
 
-***Unmodifiable Collections:***
+***Unmodifiable Collections:***<br>
 
-1 - Read-only Views
+1 - Read-only Views<br>
 
-Unmodifiable collections, typically created using methods like Collections.unmodifiableList(),
-Collections.unmodifiableSet(), or Collections.unmodifiableMap(), are essentially read-only views or wrappers around an
-existing, potentially mutable, collection.
+Unmodifiable collections, typically created using methods like Collections.unmodifiableList(), Collections.unmodifiableSet(), or Collections.unmodifiableMap(), are essentially read-only views or wrappers around an existing, potentially mutable, collection.<br>
 
-2 - No Direct Modification
+2 - No Direct Modification<br>
 
-You cannot directly add, remove, or clear elements using the reference to the unmodifiable collection; attempting to do
-so will result in an UnsupportedOperationException.
+You cannot directly add, remove, or clear elements using the reference to the unmodifiable collection; attempting to do so will result in an UnsupportedOperationException.<br>
 
-3 - Reflect Underlying Changes
+3 - Reflect Underlying Changes<br>
 
-The crucial point is that if the original, underlying collection is modified by another reference, those changes will be
-reflected in the unmodifiable view. This means the state of the unmodifiable collection can still change indirectly.
+The crucial point is that if the original, underlying collection is modified by another reference, those changes will be reflected in the unmodifiable view. This means the state of the unmodifiable collection can still change indirectly.<br>
 
-***Immutable Collections:***
+***Immutable Collections:***<br>
 
-1 - Truly Unchangeable:
+1 - Truly Unchangeable:<br>
 
-Immutable collections, such as those provided by libraries like Guava (e.g., ImmutableList, ImmutableSet, ImmutableMap)
-or the List.of(), Set.of(), and Map.of() methods introduced in Java 9, guarantee that their state will never change
-after creation.
+Immutable collections, such as those provided by libraries like Guava (e.g., ImmutableList, ImmutableSet, ImmutableMap) or the List.of(), Set.of(), and Map.of() methods introduced in Java 9, guarantee that their state will never change after creation.<br>
 
-2 - Owns its Data
+2 - Owns its Data<br>
 
-They achieve this by creating a copy of the elements from the source collection (if one is provided) and managing their
-own internal data.
+They achieve this by creating a copy of the elements from the source collection (if one is provided) and managing their own internal data.<br>
 
-3 - No Reflection of Source Changes
+3 - No Reflection of Source Changes<br>
 
-If you create an immutable collection from a mutable one, subsequent changes to the original mutable collection will not
-affect the immutable collection. It holds its own, independent set of data.
+If you create an immutable collection from a mutable one, subsequent changes to the original mutable collection will not affect the immutable collection. It holds its own, independent set of data.<br>
 
-***In Summary***
+***In Summary***<br>
 
-**Unmodifiable**: Prevents direct modification through its own reference, but its state can change if the underlying
-mutable collection is modified.
+**Unmodifiable**: Prevents direct modification through its own reference, but its state can change if the underlying mutable collection is modified.<br>
 
-**Immutable**: Guarantees that its state cannot change at all after creation, regardless of external modifications to
-any source collections. It holds its own copy of the data.
+**Immutable**: Guarantees that its state cannot change at all after creation, regardless of external modifications to any source collections. It holds its own copy of the data.<br>
 
-Example:
+Example:<br>
 
 ```java
 
@@ -348,24 +302,21 @@ public class CollectionComparison {
 
 ```
 
-# Override: instance or static variables
+# Override: instance or static variables<br>
 
-In Java, you cannot override instance or static variables (also known as fields).
+In Java, you cannot override instance or static variables (also known as fields).<br>
 
-***Instance Variables***
+***Instance Variables***<br>
 
-You can hide an instance variable in a subclass by declaring a field with the same name. This is called shadowing or
-hiding, not overriding.
+You can hide an instance variable in a subclass by declaring a field with the same name. This is called shadowing or hiding, not overriding.<br>
 
-**The concrete reason**
+**The concrete reason**<br>
 
-Overriding is a concept that applies to methods and relies on dynamic dispatch (runtime polymorphism). When an
-overridden method is called, the Java Virtual Machine (JVM) determines which implementation to execute based on the
-actual runtime type of the object.
+Overriding is a concept that applies to methods and relies on dynamic dispatch (runtime polymorphism). When an overridden method is called, the Java Virtual Machine (JVM) determines which implementation to execute based on the actual runtime type of the object.<br>
 
-Variables, however, are resolved at compile time based on the declared (compile-time) type of the reference variable.
+Variables, however, are resolved at compile time based on the declared (compile-time) type of the reference variable.<br>
 
-Example of Hiding (Shadowing):
+Example of Hiding (Shadowing):<br>
 
 ```java
 class Parent {
@@ -392,18 +343,15 @@ public class Test {
 
 ```
 
-***Static Variables***
+***Static Variables***<br>
 
-Static variables (class variables) are also resolved at compile time based on the reference type. Declaring a static
-variable with the same name in a subclass also hides the superclass's static variable, it does not override it.
+Static variables (class variables) are also resolved at compile time based on the reference type. Declaring a static variable with the same name in a subclass also hides the superclass's static variable, it does not override it.<br>
 
-**The concrete reason**
+**The concrete reason**<br>
 
-Static members belong to the class itself, not an instance of the class. They exist independently of any specific
-object. The mechanism of dynamic dispatch used for method overriding only works with instance methods that are part of
-an object's state and behavior.
+Static members belong to the class itself, not an instance of the class. They exist independently of any specific object. The mechanism of dynamic dispatch used for method overriding only works with instance methods that are part of an object's state and behavior.<br>
 
-Example of Hiding:
+Example of Hiding:<br>
 
 ```java
 class ParentStatic {
@@ -431,23 +379,19 @@ public class TestStatic {
 
 ```
 
-# Overloading
+# Overloading<br>
 
-a. Can you overload methods with different return types?
-b. Can you overload with changing the argument types from primitive to wrapper type i.e
-Void abc (int a) {}; Void abc (Integer a) {};
-c. Be prepared with method overloading with Autoboxing and Widening
+a. Can you overload methods with different return types?<br>
+b. Can you overload with changing the argument types from primitive to wrapper type i.e Void abc (int a) {}; Void abc (Integer a) {};<br>
+c. Be prepared with method overloading with Autoboxing and Widening<br>
 
-In Java, methods cannot be overloaded based solely on their return type. Method overloading relies on the method's
-signature, which consists of the method name and the parameter list (number, type, and order of parameters).
+In Java, methods cannot be overloaded based solely on their return type. Method overloading relies on the method's signature, which consists of the method name and the parameter list (number, type, and order of parameters).<br>
 
-The return type is not considered part of the method signature for overloading purposes.
+The return type is not considered part of the method signature for overloading purposes.<br>
 
-If you attempt to define two methods with the same name and parameter list but different return types, the Java compiler
-will report a compilation error. This is because the compiler would be unable to determine which method to invoke when a
-call is made, as the return type alone does not provide sufficient information to distinguish between them.
+If you attempt to define two methods with the same name and parameter list but different return types, the Java compiler will report a compilation error. This is because the compiler would be unable to determine which method to invoke when a call is made, as the return type alone does not provide sufficient information to distinguish between them.<br>
 
-For example, the following code would result in a compilation error:
+For example, the following code would result in a compilation error:<br>
 
 ```java
 public class MyClass {
@@ -463,51 +407,45 @@ public class MyClass {
 
 ```
 
-To successfully overload methods in Java, you must ensure that each overloaded method has a unique parameter list. This
-can involve varying the number of parameters, the data types of the parameters, or the order of the parameters.
+To successfully overload methods in Java, you must ensure that each overloaded method has a unique parameter list. This can involve varying the number of parameters, the data types of the parameters, or the order of the parameters.<br>
 
-### Can you overload with changing the argument types from primitive to wrapper type i.e Void abc (int a) {}; Void abc (Integer a) {};
+### Can you overload with changing the argument types from primitive to wrapper type i.e Void abc (int a) {}; Void abc (Integer a) {};<br>
 
-Yes, method overloading in Java is possible by defining methods with the same name but different parameter lists, and
-this includes varying the argument types between primitive types and their corresponding wrapper classes.
+Yes, method overloading in Java is possible by defining methods with the same name but different parameter lists, and this includes varying the argument types between primitive types and their corresponding wrapper classes.<br>
 
-# Autoboxing and Widening
+# Autoboxing and Widening<br>
 
-Autoboxing and widening are both automatic type conversions in Java, but they operate on different types and for
-different purposes.
+Autoboxing and widening are both automatic type conversions in Java, but they operate on different types and for different purposes.<br>
 
-***Autoboxing:***
+***Autoboxing:***<br>
 
-**What it is**
+**What it is**<br>
 
-The automatic conversion of a primitive data type to its corresponding wrapper class object.
+The automatic conversion of a primitive data type to its corresponding wrapper class object.<br>
 
-**Purpose**
+**Purpose**<br>
 
-To allow primitive values to be used in contexts that require objects, such as Java Collections (e.g., ArrayList,
-HashMap), which can only store objects.
+To allow primitive values to be used in contexts that require objects, such as Java Collections (e.g., ArrayList, HashMap), which can only store objects.<br>
 
-Examples:
+Examples:<br>
 
-int to Integer
-char to Character
-boolean to Boolean
+int to Integer<br> 
+char to Character<br>
+boolean to Boolean<br>
 
-***Widening (Widening Primitive Conversion)***
+***Widening (Widening Primitive Conversion)***<br>
 
-**What it is**
+**What it is**<br>
 
-The automatic conversion of a primitive data type to a larger-sized primitive data type. This conversion is always safe
-as it does not involve any loss of data magnitude.
+The automatic conversion of a primitive data type to a larger-sized primitive data type. This conversion is always safe as it does not involve any loss of data magnitude.<br>
 
-**Purpose**
+**Purpose**<br>
 
-To enable operations between different-sized primitive types and to assign a smaller primitive type to a variable of a
-larger primitive type.
+To enable operations between different-sized primitive types and to assign a smaller primitive type to a variable of a larger primitive type.<br>
 
-Examples:
+Examples:<br>
 
-byte to short
-short to int
-int to long
-float to double
+byte to short<br>
+short to int<br>
+int to long<br>
+float to double<br>

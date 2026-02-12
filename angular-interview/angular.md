@@ -1,3 +1,26 @@
+# Angular lifecycle
+
+An Angular component goes through a predictable lifecycle from its creation to its destruction. Developers can use lifecycle hook methods to execute custom logic at specific stages, such as initializing data, responding to input changes, and cleaning up resources. 
+Angular calls these lifecycle hooks in a specific order: 
+
+ngOnChanges(): Triggered before ngOnInit() and when data-bound input properties change, providing a SimpleChanges object.
+
+ngOnInit(): Called once after the first ngOnChanges(), commonly used for initialization logic like fetching data.
+
+ngDoCheck(): Executed after ngOnChanges() on every change detection cycle, allowing for custom change detection.
+
+ngAfterContentInit(): Called once after Angular projects external content into the component, enabling access to ContentChild or ContentChildren.
+
+ngAfterContentChecked(): Follows ngAfterContentInit() and subsequent ngDoCheck(), used to respond after projected content is checked.
+
+ngAfterViewInit(): Called once after the component's views and child views are initialized, suitable for DOM manipulation and accessing ViewChild or ViewChildren.
+
+ngAfterViewChecked(): Occurs after ngAfterViewInit() and subsequent ngAfterContentChecked(), used after the component's views are checked.
+
+ngOnDestroy(): Called just before the component or directive is destroyed, essential for cleanup to prevent memory leaks. 
+
+To utilize these hooks, you implement the corresponding interface and define the method in your component or directive class. You can find more information in the official Angular documentation. 
+
 # ChangeDetectionStrategy.OnPush
 
 ChangeDetectionStrategy.OnPush is an Angular performance optimization technique that tells the framework to run change detection for a component and its subtree only when specific conditions are met, rather than on every single application-wide change. 
@@ -58,3 +81,47 @@ OnPush Strategy: The most common use case is with ChangeDetectionStrategy.OnPush
 External Libraries/APIs: When working with third-party JavaScript libraries that perform actions outside of the Angular zone (like certain WebSocket callbacks or D3.js updates), Angular needs to be manually notified of changes. ChangeDetectorRef is the tool for this.
 Performance Optimization: For large lists or complex components where data changes frequently but the view doesn't need to update in real-time, detach() can be used to manually control when the component is updated, perhaps only every few seconds using detectChanges(). 
 While powerful, overusing ChangeDetectorRef can sometimes signal underlying architectural issues; it is often better to ensure proper data flow, use immutable data, or leverage the async pipe when possible. 
+
+
+# Nested subscription
+
+Handling nested subscriptions in Angular is best achieved by flattening them using RxJS higher-order mapping operators (switchMap, mergeMap, concatMap) instead of subscribing inside another subscription. These operators avoid memory leaks, improve readability, and ensure proper error handling. 
+
+Key Strategies for Nested Subscriptions:
+
+switchMap (Preferred): Ideal for scenarios where a new inner observable should cancel the previous one (e.g., search-as-you-type).
+mergeMap: Use when all inner observables should run concurrently.
+
+concatMap: Use when order of execution matters and should be maintained.
+
+forkJoin: Ideal for running multiple API requests in parallel and waiting for all to complete before proceeding.
+
+Async Pipe (| async): Use this in templates to automatically handle subscription and unsubscription, preventing memory leaks. 
+
+Example: Replacing Nested Subscriptions
+
+Instead of:
+```typescript
+// Antipattern: Nested Subscription
+this.route.params.subscribe(params => {
+  this.service.getData(params.id).subscribe(data => {
+    this.data = data;
+  });
+});
+```
+Use Operator Flattening: 
+```typescript
+// Best Practice: Flattened with switchMap
+this.data$ = this.route.params.pipe(
+  map(params => params.id),
+  switchMap(id => this.service.getData(id))
+);
+// Use this.data$ | async in the template
+```
+
+Additional Tips:
+
+Avoid Subscribing: Only subscribe when absolutely necessary; prefer operator pipelines and async pipes.
+
+ngOnDestroy: If manual subscription is unavoidable, ensure you unsubscribe to prevent memory leaks, using takeUntil or Subscription.add().
+Error Handling: Use catchError within the operator pipe to manage errors from inner streams effectively. 
