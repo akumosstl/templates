@@ -1,7 +1,6 @@
 # Rest
 REST and spring-boot.
 
-
 # ‘Statelessness’ on RESTful WEB service (advantages and disadvantages)
 
 Statelessness is a core architectural constraint in REST (Representational State Transfer).<br> 
@@ -138,19 +137,20 @@ When you encounter an HTTP 500 error, it means the server itself is having a pro
 
 ## 5. Explain different HTTP methods like Get, PUT, POST, Delete, Patch, Head & Options?
 
-HTTP methods, also known as HTTP verbs, define the type of action to be performed on a resource identified by a URL.
-Here are explanations of the specified methods:
-GET: This method is used to retrieve data from the server. It is a safe and idempotent method, meaning it does not alter
-the server's state and multiple identical requests will have the same effect as a single one.
-Código
+HTTP methods, also known as HTTP verbs, define the type of action to be performed on a resource identified by a URL.<br>
+Here are explanations of the specified methods:<br>
+GET: This method is used to retrieve data from the server. It is a safe and idempotent method, meaning it does not alter the server's state and multiple identical requests will have the same effect as a single one.<br>
 
+Código
+```bash
     GET /users/123
+```
 
-This request would fetch the data for a user with ID 123.
-POST: This method sends data to the server to create a new resource. It is not idempotent, meaning multiple identical
-requests could result in the creation of multiple resources.
+This request would fetch the data for a user with ID 123.<br>
+POST: This method sends data to the server to create a new resource. It is not idempotent, meaning multiple identical requests could result in the creation of multiple resources.<br>
+
 Código
-
+```bash
     POST /users
     Content-Type: application/json
 
@@ -158,12 +158,12 @@ Código
         "name": "John Doe",
         "email": "john.doe@example.com"
     }
+```
+This request would create a new user resource.<br>
+PUT: This method is used to update or replace an existing resource with new data, or create it if it doesn't exist. It is an idempotent method, meaning repeated identical requests will have the same effect as a single one.<br>
 
-This request would create a new user resource.
-PUT: This method is used to update or replace an existing resource with new data, or create it if it doesn't exist. It
-is an idempotent method, meaning repeated identical requests will have the same effect as a single one.
-Código
-
+Código<br>
+```bash
     PUT /users/123
     Content-Type: application/json
 
@@ -171,17 +171,18 @@ Código
         "name": "Jane Doe",
         "email": "jane.doe@example.com"
     }
+```
 
-This request would completely replace the data of the user with ID 123.
-DELETE: This method is used to remove a specified resource from the server. It is an idempotent method.
-Código
-
+This request would completely replace the data of the user with ID 123.<br>
+DELETE: This method is used to remove a specified resource from the server. It is an idempotent method.<br>
+Código<br>
+```bash
     DELETE /users/123
-
-This request would delete the user resource with ID 123.
-PATCH: This method is used to apply partial modifications to a resource. Unlike PUT, which requires sending the complete
-resource, PATCH only needs to contain the changes to be applied. It is not an idempotent method.
-Código
+```
+This request would delete the user resource with ID 123.<br>
+PATCH: This method is used to apply partial modifications to a resource. Unlike PUT, which requires sending the complete resource, PATCH only needs to contain the changes to be applied. It is not an idempotent method.<br>
+Código<br>
+```bash
 
     PATCH /users/123
     Content-Type: application/json
@@ -189,43 +190,37 @@ Código
     {
         "email": "new.email@example.com"
     }
-
-This request would update only the email address of the user with ID 123.
-HEAD: This method is almost identical to GET, but it retrieves only the header information of a resource without the
-response body. It is useful for checking metadata like Content-Length or Content-Type without downloading the entire
-resource.
-Código
+```
+This request would update only the email address of the user with ID 123.<br>
+HEAD: This method is almost identical to GET, but it retrieves only the header information of a resource without the response body. It is useful for checking metadata like Content-Length or Content-Type without downloading the entire resource.<br>
+Código<br>
+```bash
 
     HEAD /users
+```
 
-OPTIONS: This method describes the communication options for the target resource. It can be used to determine which HTTP
-methods are supported by a particular URL.
-Código
-
+OPTIONS: This method describes the communication options for the target resource. It can be used to determine which HTTP methods are supported by a particular URL.<br>
+Código<br>
+```bash
     OPTIONS /users
-
-The response would typically include an Allow header listing the supported methods (e.g., Allow: GET, POST, PUT,
-DELETE).
+```
+The response would typically include an Allow header listing the supported methods (e.g., Allow: GET, POST, PUT, DELETE).<br>
 
 # API versioning
 
-API versioning can be implemented using methods like URL path, query parameters, or request headers to manage API
-changes without disrupting users. Each approach has trade-offs: URL versioning is clear and easy to see, query
-parameters keep the URL clean but require clients to pass the parameter, and header versioning is the most hidden,
-keeping the URL completely clean but making it less visible to users. The best method depends on factors like
-scalability, usability, and project needs.
+API versioning can be implemented using methods like URL path, query parameters, or request headers to manage API changes without disrupting users. Each approach has trade-offs: URL versioning is clear and easy to see, query parameters keep the URL clean but require clients to pass the parameter, and header versioning is the most hidden, keeping the URL completely clean but making it less visible to users. The best method depends on factors like scalability, usability, and project needs.<br>
 
-url versioning:
-Version is included in the URL path, e.g., /api/v1/products
+url versioning:<br>
+Version is included in the URL path, e.g., /api/v1/products<br>
 
-query parameter versioning
-Version is passed as a parameter in the URL, e.g., /api/products?version=1.0.
+query parameter versioning<br>
+Version is passed as a parameter in the URL, e.g., /api/products?version=1.0<br>
 
-header versioning
-Version is specified in a custom request header, e.g., API-Version: 1.
+header versioning<br>
+Version is specified in a custom request header, e.g., API-Version: 1.<br>
 
-media type versioning
-Version is included in the Accept header as part of the media type, e.g., application/json;v=1.
+media type versioning<br>
+Version is included in the Accept header as part of the media type, e.g., application/json;v=1.<br>
 
 # How can you make your Rest APIs secure?
 

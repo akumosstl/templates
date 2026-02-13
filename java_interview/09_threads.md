@@ -1,76 +1,28 @@
 # Multithreading & Java Concurrency
+Thread questions.
 
-#### 1. [Multithread environment](#multithread-enviroment)
 
-#### 2. [Thread-safe code](#thread-safe-code)
 
-#### 3. [Runnable vs Callable](#runnable-vs-callable)
+# What kind of common problems we have in a multi-threading environment?
 
-#### 4. [UncaughtExceptionHandler](#uncaughtexceptionhandler)
+Common problems encountered in a multi-threading environment during concurrent operations include:<br>
 
-#### 5. [Thread-scheduling](#thread-scheduling)
+**Race Conditions**: This occurs when multiple threads attempt to access and modify shared data simultaneously, and the final result depends on the unpredictable order of execution. This can lead to incorrect or inconsistent data.<br>
 
-#### 6. [Thread execution](#thread-execution)
+*Resolution*: Employ synchronization mechanisms such as mutexes, semaphores, or locks to ensure that only one thread can access the critical section (the shared data) at a time. For example, in Java, the synchronized keyword or **ReentrantLock** can be used.**ReentrantLock** in Java is a concrete implementation of the Lock interface within the java.util.concurrent.locks package. It provides a more flexible and powerful mechanism for thread synchronization compared to the synchronized keyword.<br>
 
-#### 7. [Thread life cycle](#thread-life-cycle)
+*Key characteristics of ReentrantLock:*<br>
 
-#### 8.[fork-join](#forkjoin)
+**Reentrant Behavior**: A thread that already holds a ReentrantLock can acquire it again without causing a deadlock. This is because the lock maintains a "hold count" for the owning thread, incrementing it with each acquisition and decrementing it with each release. The lock is only truly released when the hold count reaches zero.<br>
+Explicit Locking: Unlike synchronized which uses implicit lock acquisition and release, ReentrantLock requires explicit calls to lock() to acquire the lock and unlock() to release it. It's crucial to place unlock() within a finally block to ensure the lock is always released, even if exceptions occur.<br>
 
-#### 9. [Thread Dumps](#thread-dumps)
+**Fairness Policy**: ReentrantLock offers the option to create a fair lock (using new ReentrantLock(true)). In a fair lock, threads waiting to acquire the lock are granted access in the order they requested it, preventing "thread starvation." A non-fair lock (the default) allows for higher throughput but doesn't guarantee the order of acquisition.<br>
 
-#### 10. [Executor framework](#executor-framework)
+**Interruptible Locking**: Threads waiting for a ReentrantLock can be interrupted using lockInterruptibly(), allowing for more responsive and robust handling of long-waiting threads.<br>
 
-#### 11. [Threadlocal](#threadlocal)
+**TryLock**: The tryLock() method allows a thread to attempt to acquire the lock without blocking indefinitely. It returns true if the lock is acquired successfully and false otherwise. Overloaded versions of tryLock() allow specifying a timeout for the acquisition attempt.<br>
 
-#### 12. [Deadlock](#deadlock)
-
-#### 13. [Semaphores](#semaphores)
-
-#### 14. [Race condition](#race-condition)
-
-#### 15. [Blocking queue](#blocking-queue)
-
-#### 15. [Futures object](#futures-object)
-
-#### 16. [deadlock, livelock & thread starvation](#deadlock-livelock-&-thread-starvation)
-
-# Multithread enviroment
-
-a. What kind of common problems, which usually comes while doing concurrent operation you have faced in multi-threading
-environment? How did you resolve it?
-
-Common problems encountered in a multi-threading environment during concurrent operations include:
-
-**Race Conditions**: This occurs when multiple threads attempt to access and modify shared data simultaneously, and the
-final result depends on the unpredictable order of execution. This can lead to incorrect or inconsistent data.
-
-*Resolution*: Employ synchronization mechanisms such as mutexes, semaphores, or locks to ensure that only one thread can
-access the critical section (the shared data) at a time. For example, in Java, the synchronized keyword or *
-*ReentrantLock** can be used. **ReentrantLock** in Java is a concrete implementation of the Lock interface within the
-java.util.concurrent.locks package. It provides a more flexible and powerful mechanism for thread synchronization
-compared to the synchronized keyword.
-
-*Key characteristics of ReentrantLock:*
-
-**Reentrant Behavior**: A thread that already holds a ReentrantLock can acquire it again without causing a deadlock.
-This is because the lock maintains a "hold count" for the owning thread, incrementing it with each acquisition and
-decrementing it with each release. The lock is only truly released when the hold count reaches zero.
-Explicit Locking: Unlike synchronized which uses implicit lock acquisition and release, ReentrantLock requires explicit
-calls to lock() to acquire the lock and unlock() to release it. It's crucial to place unlock() within a finally block to
-ensure the lock is always released, even if exceptions occur.
-
-**Fairness Policy**: ReentrantLock offers the option to create a fair lock (using new ReentrantLock(true)). In a fair
-lock, threads waiting to acquire the lock are granted access in the order they requested it, preventing "thread
-starvation." A non-fair lock (the default) allows for higher throughput but doesn't guarantee the order of acquisition.
-
-**Interruptible Locking**: Threads waiting for a ReentrantLock can be interrupted using lockInterruptibly(), allowing
-for more responsive and robust handling of long-waiting threads.
-
-**TryLock**: The tryLock() method allows a thread to attempt to acquire the lock without blocking indefinitely. It
-returns true if the lock is acquired successfully and false otherwise. Overloaded versions of tryLock() allow specifying
-a timeout for the acquisition attempt.
-
-Example Usage:
+Example Usage:<br>
 
 ```Java
 
@@ -96,112 +48,82 @@ public class SharedResource {
 }
 ```
 
-**Deadlocks**: A deadlock arises when two or more threads are blocked indefinitely, each waiting for a resource held by
-another thread in the same cycle. This can cause the application to freeze.
+**Deadlocks**: A deadlock arises when two or more threads are blocked indefinitely, each waiting for a resource held by another thread in the same cycle. This can cause the application to freeze.<br>
 
-*Resolution*: Implement deadlock prevention strategies, such as enforcing a strict order of resource acquisition, using
-timeouts for acquiring locks, or employing deadlock detection algorithms. Carefully design resource allocation to avoid
-circular dependencies.
+**Resolution**: Implement deadlock prevention strategies, such as enforcing a strict order of resource acquisition, using timeouts for acquiring locks, or employing deadlock detection algorithms. Carefully design resource allocation to avoid circular dependencies.<br>
 
-**Livelocks**: Similar to deadlocks, threads in a livelock continuously change their state in response to other threads,
-but no actual progress is made. They are not blocked but are stuck in a loop of futile actions.
+**Livelocks**: Similar to deadlocks, threads in a livelock continuously change their state in response to other threads, but no actual progress is made. They are not blocked but are stuck in a loop of futile actions.<br>
 
-*Resolution*: Introduce random backoff mechanisms or prioritize threads to break the cycle of repeated, unproductive
-actions.
+**Resolution**: Introduce random backoff mechanisms or prioritize threads to break the cycle of repeated, unproductive actions.<br>
 
-**Starvation**: Starvation occurs when a thread is repeatedly denied access to a shared resource, even though the
-resource becomes available, because other threads consistently acquire it.
+**Starvation**: Starvation occurs when a thread is repeatedly denied access to a shared resource, even though the resource becomes available, because other threads consistently acquire it.<br>
 
-*Resolution*: Implement fair scheduling algorithms for resource access, such as using fair locks or priority queues, to
-ensure that all threads eventually get their turn.
+**Resolution**: Implement fair scheduling algorithms for resource access, such as using fair locks or priority queues, to ensure that all threads eventually get their turn.<br>
 
-**Data Inconsistency (Visibility Issues)**: In some cases, changes made by one thread to shared data might not be
-immediately visible to other threads due to processor caching or compiler optimizations.
+**Data Inconsistency (Visibility Issues)**: In some cases, changes made by one thread to shared data might not be immediately visible to other threads due to processor caching or compiler optimizations.<br>
 
-*Resolution*: Use volatile keywords for variables that are frequently read and written by multiple threads to ensure
-that changes are always read from main memory. Alternatively, use synchronization primitives that establish a
-happens-before relationship, guaranteeing memory visibility.
+**Resolution**: Use volatile keywords for variables that are frequently read and written by multiple threads to ensure that changes are always read from main memory. Alternatively, use synchronization primitives that establish a happens-before relationship, guaranteeing memory visibility.<br>
 
-**Performance Overheads**: Excessive use of synchronization or fine-grained locking can introduce significant overhead,
-negating the performance benefits of multithreading.
+**Performance Overheads**: Excessive use of synchronization or fine-grained locking can introduce significant overhead, negating the performance benefits of multithreading.<br>
 
-*Resolution*: Optimize synchronization by using concurrent data structures (e.g., ConcurrentHashMap), reducing the scope
-of synchronized blocks, and considering lock-free algorithms where appropriate. Profile the application to identify
-performance bottlenecks.
+**Resolution**: Optimize synchronization by using concurrent data structures (e.g., ConcurrentHashMap), reducing the scope of synchronized blocks, and considering lock-free algorithms where appropriate. Profile the application to identify performance bottlenecks.<br>
 
-# Thread-safe code
+# How does write a Thread-safe code?
 
-Here are some guidelines and best practices for writing thread-safe code:
+Here are some guidelines and best practices for writing thread-safe code:<br>
 
-**Prefer Immutability**: Design objects to be immutable whenever possible. Immutable objects, whose state cannot be
-changed after creation, inherently eliminate race conditions and do not require synchronization mechanisms.
+**Prefer Immutability**: Design objects to be immutable whenever possible. Immutable objects, whose state cannot be changed after creation, inherently eliminate race conditions and do not require synchronization mechanisms.<br>
 
-**Minimize Shared Mutable State**: Limit the amount of data that is shared and can be modified by multiple threads.
-Encapsulate shared mutable data and provide controlled access to it.
+**Minimize Shared Mutable State**: Limit the amount of data that is shared and can be modified by multiple threads. Encapsulate shared mutable data and provide controlled access to it.<br>
 
-**Use Concurrent Collections**: Leverage pre-existing thread-safe concurrent data structures provided by your language
-or framework (e.g., ConcurrentHashMap, CopyOnWriteArrayList in Java). These collections handle synchronization
-internally and are often optimized for concurrent access.
+**Use Concurrent Collections**: Leverage pre-existing thread-safe concurrent data structures provided by your language or framework (e.g., ConcurrentHashMap, CopyOnWriteArrayList in Java). These collections handle synchronization internally and are often optimized for concurrent access.<br>
 
-**Synchronize Access to Shared Mutable State**: When shared mutable state is unavoidable, use appropriate
-synchronization mechanisms (e.g., locks, mutexes, semaphores) to protect critical sections of code that access or modify
-this state.
-Keep Lock Scopes Small: Acquire and release locks for the shortest possible duration. This reduces contention and
-improves concurrency. Avoid holding locks across long-running operations or I/O calls.
+**Synchronize Access to Shared Mutable State**: When shared mutable state is unavoidable, use appropriate synchronization mechanisms (e.g., locks, mutexes, semaphores) to protect critical sections of code that access or modify this state.<br>
 
-**Avoid Nested Locks**: Taking multiple locks in different orders across different threads can easily lead to deadlocks.
-If multiple locks are necessary, establish a strict, consistent ordering for acquiring them across all threads.
+**Keep Lock Scopes Small**: Acquire and release locks for the shortest possible duration. This reduces contention and improves concurrency. Avoid holding locks across long-running operations or I/O calls.<br>
 
-**Use Thread-Local Variables**: For data that needs to be unique to each thread, use thread-local storage. This avoids
-sharing and eliminates the need for synchronization for that specific data.
+**Avoid Nested Locks**: Taking multiple locks in different orders across different threads can easily lead to deadlocks. If multiple locks are necessary, establish a strict, consistent ordering for acquiring them across all threads.<br>
 
-**Leverage Higher-Level Concurrency Constructs**: Utilize higher-level abstractions like thread pools, ExecutorService,
-or asynchronous programming models (async/await) to manage threads and concurrency more effectively, often abstracting
-away low-level synchronization details.
+**Use Thread-Local Variables**: For data that needs to be unique to each thread, use thread-local storage. This avoids sharing and eliminates the need for synchronization for that specific data.<br>
 
-**Test Thoroughly Under Load**: Concurrency bugs can be subtle and often only manifest under specific load conditions.
-Rigorously test your multithreaded code with stress tests and concurrency testing tools to uncover potential issues.
+**Leverage Higher-Level Concurrency Constructs**: Utilize higher-level abstractions like thread pools, ExecutorService, or asynchronous programming models (async/await) to manage threads and concurrency more effectively, often abstracting away low-level synchronization details.<br>
 
-**Document Locking Strategy**: Clearly document the synchronization mechanisms used, the shared resources they protect,
-and any established locking order to aid in maintenance and prevent future concurrency bugs.
+**Test Thoroughly Under Load**: Concurrency bugs can be subtle and often only manifest under specific load conditions. Rigorously test your multithreaded code with stress tests and concurrency testing tools to uncover potential issues.<br>
+
+**Document Locking Strategy**: Clearly document the synchronization mechanisms used, the shared resources they protect, and any established locking order to aid in maintenance and prevent future concurrency bugs.<br>
 
 # Runnable vs Callable
 
-Runnable and Callable in Java are interfaces for async tasks, but the key difference is that Runnable's run() method
-returns void and can't throw checked exceptions, while Callable's call() method returns a generic result and can throw
-exceptions, accessed via a Future object for retrieving the value or handling errors, making Callable better for tasks
-needing a return value.
+Runnable and Callable in Java are interfaces for async tasks, but the key difference is that Runnable's run() method returns void and can't throw checked exceptions, while Callable's call() method returns a generic result and can throw exceptions, accessed via a Future object for retrieving the value or handling errors, making Callable better for tasks needing a return value.<br>
 
-**Runnable**
+**Runnable**<br>
 
-Method: void run()
+Method: void run()<br>
 
-Returns: Nothing (void)
+Returns: Nothing (void)<br>
 
-Exceptions: Cannot throw checked exceptions (must handle internally)
+Exceptions: Cannot throw checked exceptions (must handle internally)<br>
 
-Package: java.lang
+Package: java.lang<br>
 
-Use Case: Simple tasks where you just need execution, not a result (e.g., printing a message).
+Use Case: Simple tasks where you just need execution, not a result (e.g., printing a message).<br>
 
-Callable
-Method: <V> V call()
-Returns: A generic value (e.g., Integer, String)
-Exceptions: Can throw checked exceptions (e.g., Exception)
-Package: java.util.concurrent
-Use Case: Tasks that compute and return a value, or need exception handling for the result (e.g., a calculation,
-database query).
-Key Takeaway
-Use Runnable for fire-and-forget tasks; use Callable when you need the task to produce a result or signal an error back
-to the main thread, typically using an ExecutorService to submit it and a Future to get the outcome.
+Callable<br>
+Method: <V> V call()<br>
+Returns: A generic value (e.g., Integer, String)<br>
+Exceptions: Can throw checked exceptions (e.g., Exception)<br>
+Package: java.util.concurrent<br>
+Use Case: Tasks that compute and return a value, or need exception handling for the result (e.g., a calculation, database query).<br>
+
+***Key Takeaway***<br>
+Use Runnable for fire-and-forget tasks; use Callable when you need the task to produce a result or signal an error back to the main thread, typically using an ExecutorService to submit it and a Future to get the outcome.<br>
 
 # UncaughtExceptionHandler
 
-In Java, an unhandled exception in a thread can be managed using UncaughtExceptionHandler. This mechanism allows for
-custom handling of exceptions that are not caught within the thread's run() method.
-Here's how to implement it: Create a custom UncaughtExceptionHandler.
-Implement the Thread.UncaughtExceptionHandler interface and define the uncaughtException(Thread t, Throwable e) method.
-This method will be invoked when an uncaught exception occurs in the thread t.
+In Java, an unhandled exception in a thread can be managed using UncaughtExceptionHandler. This mechanism allows for custom handling of exceptions that are not caught within the thread's run() method.<br>
+Here's how to implement it: Create a custom UncaughtExceptionHandler.<br>
+Implement the Thread.UncaughtExceptionHandler interface and define the uncaughtException(Thread t, Throwable e) method.<br>
+This method will be invoked when an uncaught exception occurs in the thread t.<br>
 
 ```Java
 
@@ -214,8 +136,8 @@ class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 }
 ```
 
-Set the handler for a specific thread:
-You can set a custom handler for an individual Thread instance using thread.setUncaughtExceptionHandler().
+Set the handler for a specific thread:<br>
+You can set a custom handler for an individual Thread instance using thread.setUncaughtExceptionHandler().<br>
 
 ```Java
 
@@ -231,10 +153,8 @@ setUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
 start();
 ```
 
-Set a default handler for all threads:
-For a more global approach, you can set a default uncaught exception handler for all newly created threads in your
-application using Thread.setDefaultUncaughtExceptionHandler(). This handler will be used if no specific handler is set
-for a particular thread.
+Set a default handler for all threads:<br>
+For a more global approach, you can set a default uncaught exception handler for all newly created threads in your application using Thread.setDefaultUncaughtExceptionHandler(). This handler will be used if no specific handler is set for a particular thread.<br>
 
 ```Java
 
@@ -250,46 +170,34 @@ Thread anotherThread = new Thread(() -> {
 start();
 ```
 
-Key Considerations:
+Key Considerations:<br>
 
-**Logging**: Always log the exception details (stack trace, message) for debugging and analysis.
+**Logging**: Always log the exception details (stack trace, message) for debugging and analysis.<br>
 
-**Resource Cleanup**: Use the handler to perform any necessary resource cleanup, especially if the unhandled exception
-could leave resources in an inconsistent state.
+**Resource Cleanup**: Use the handler to perform any necessary resource cleanup, especially if the unhandled exception could leave resources in an inconsistent state.<br>
 
-**Application Stability**: Decide whether the unhandled exception should terminate the application or if the handler can
-gracefully recover.
-Error Reporting: Consider integrating with error reporting tools to automatically track and manage unhandled exceptions
-in production environments.
+**Application Stability**: Decide whether the unhandled exception should terminate the application or if the handler can gracefully recover.<br>
+Error Reporting: Consider integrating with error reporting tools to automatically track and manage unhandled exceptions in production environments.<br>
 
 # Thread-scheduling
 
-In Java, tasks can be scheduled using built-in utilities like the ScheduledExecutorService and Timer, or with powerful
-external libraries and frameworks such as Spring's @Scheduled annotation and the Quartz scheduler.
+In Java, tasks can be scheduled using built-in utilities like the ScheduledExecutorService and Timer, or with powerful external libraries and frameworks such as Spring's @Scheduled annotation and the Quartz scheduler.<br>
 
-The Java Virtual Machine (JVM) employs a preemptive, priority-based scheduling algorithm for its threads.
+The Java Virtual Machine (JVM) employs a preemptive, priority-based scheduling algorithm for its threads.<br>
 
-Here's a breakdown:
+Here's a breakdown:<br>
 
-**Priority-Based**: Each Java thread has an assigned priority, an integer value between Thread.MIN_PRIORITY and
-Thread.MAX_PRIORITY. The thread scheduler prioritizes runnable threads with higher priority for execution.
+**Priority-Based**: Each Java thread has an assigned priority, an integer value between Thread.MIN_PRIORITY and Thread.MAX_PRIORITY. The thread scheduler prioritizes runnable threads with higher priority for execution.<br>
 
-**Preemptive**: If a higher-priority thread becomes runnable while a lower-priority thread is executing, the JVM can
-preempt (interrupt) the lower-priority thread to allow the higher-priority thread to run.
+**Preemptive**: If a higher-priority thread becomes runnable while a lower-priority thread is executing, the JVM can preempt (interrupt) the lower-priority thread to allow the higher-priority thread to run.<br>
 
-**Round-Robin (for equal priority)**: If multiple threads have the same highest priority and are in a runnable state,
-the scheduler typically uses a round-robin approach to give each of them a turn, often with time-slicing on systems that
-support it.
+**Round-Robin (for equal priority)**: If multiple threads have the same highest priority and are in a runnable state, the scheduler typically uses a round-robin approach to give each of them a turn, often with time-slicing on systems that support it.<br>
 
-**Inheritance**: When a new thread is created, it inherits the priority of its parent thread. This priority can be
-modified using the setPriority() method.
+**Inheritance**: When a new thread is created, it inherits the priority of its parent thread. This priority can be modified using the setPriority() method.<br>
 
-**Yielding**: Threads can voluntarily give up their CPU time to other threads of the same or higher priority using the
-Thread.yield() method.
+**Yielding**: Threads can voluntarily give up their CPU time to other threads of the same or higher priority using the Thread.yield() method.<br>
 
-It is important to note that while Java specifies this priority-based scheduling, the actual implementation and behavior
-can be influenced by the underlying operating system's thread scheduling mechanisms, as Java threads are typically
-mapped to operating system threads.
+It is important to note that while Java specifies this priority-based scheduling, the actual implementation and behavior can be influenced by the underlying operating system's thread scheduling mechanisms, as Java threads are typically mapped to operating system threads.<br>
 
 # Thread execution
 
