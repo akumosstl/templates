@@ -1,15 +1,15 @@
 # Multithreading & Java Concurrency
 Thread questions.
 
-
-
 # What kind of common problems we have in a multi-threading environment?
 
 Common problems encountered in a multi-threading environment during concurrent operations include:<br>
 
 **Race Conditions**: This occurs when multiple threads attempt to access and modify shared data simultaneously, and the final result depends on the unpredictable order of execution. This can lead to incorrect or inconsistent data.<br>
 
-*Resolution*: Employ synchronization mechanisms such as mutexes, semaphores, or locks to ensure that only one thread can access the critical section (the shared data) at a time. For example, in Java, the synchronized keyword or **ReentrantLock** can be used.**ReentrantLock** in Java is a concrete implementation of the Lock interface within the java.util.concurrent.locks package. It provides a more flexible and powerful mechanism for thread synchronization compared to the synchronized keyword.<br>
+*Resolution*: Employ synchronization mechanisms such as mutexes, semaphores, or locks to ensure that only one thread can access the critical section (the shared data) at a time. For example, in Java, the **synchronized** keyword or **ReentrantLock** can be used.<br>
+
+**ReentrantLock** in Java is a concrete implementation of the Lock interface within the java.util.concurrent.locks package. It provides a more flexible and powerful mechanism for thread synchronization compared to the synchronized keyword.<br>
 
 *Key characteristics of ReentrantLock:*<br>
 

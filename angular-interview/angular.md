@@ -1,3 +1,333 @@
+# Angular
+
+
+# What is the difference between Standalone Components and NgModules? When would you use each?
+
+Standalone Components<br>
+
+Introduced in Angular 14+, standalone components:<br>
+
+Do not require an NgModule.<br>
+
+Declare their own dependencies via imports.<br>
+
+Simplify architecture.<br>
+
+Reduce boilerplate.<br>
+
+Example:
+```ts
+@Component({
+  selector: 'app-user',
+  standalone: true,
+  imports: [CommonModule],
+  template: `<p>User works!</p>`
+})
+export class UserComponent {}
+```
+NgModules<br>
+
+Traditional Angular structure:<br>
+
+Groups components, pipes, directives.<br>
+
+Manages dependency scope.<br>
+
+Defines feature modules (e.g., UserModule).<br>
+
+When to Use Each?<br>
+
+| Scenario                               | Recommendation                       |
+| -------------------------------------- | ------------------------------------ |
+| New projects                           | Standalone (default modern approach) |
+| Legacy Angular apps                    | NgModules                            |
+| Large domain-driven feature separation | Feature modules                      |
+| Microfrontends                         | Standalone components                |
+
+
+
+Senior Insight<br>
+
+Standalone components improve tree-shaking and reduce cognitive overhead. However, in very large enterprise applications with clear bounded contexts, feature modules still help enforce architectural boundaries.<br>
+
+# How does Parent–Child communication work using @Input and @Output?
+
+
+Angular supports unidirectional data flow:<br>
+
+@Input → Parent sends data to child.<br>
+
+@Output + EventEmitter → Child emits events to parent.<br>
+
+Concrete Example<br>
+
+Parent Component<br>
+```ts
+<app-child 
+  [user]="selectedUser"
+  (userUpdated)="handleUpdate($event)">
+</app-child>
+
+handleUpdate(user: User) {
+  console.log('Updated user:', user);
+}
+
+Child Component
+@Input() user!: User;
+@Output() userUpdated = new EventEmitter<User>();
+
+updateUser() {
+  this.userUpdated.emit(this.user);
+}
+```
+Senior-Level Observation<br>
+
+This pattern enforces unidirectional data flow. Overusing @Output for complex communication may signal poor component architecture — shared services with RxJS streams may be more appropriate.<br>
+
+# Explain Angular Lifecycle Hooks and provide a real-world use case.
+
+| Hook            | Purpose                    |
+| --------------- | -------------------------- |
+| ngOnInit        | Component initialization   |
+| ngOnDestroy     | Cleanup logic              |
+| ngOnChanges     | React to input changes     |
+| ngAfterViewInit | DOM access after rendering |
+
+
+Practical Scenario<br>
+
+Problem: Memory leak due to open subscriptions.<br>
+
+Solution using ngOnDestroy:<br>
+```ts
+private destroy$ = new Subject<void>();
+
+ngOnInit() {
+  this.service.getData()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe();
+}
+
+ngOnDestroy() {
+  this.destroy$.next();
+  this.destroy$.complete();
+}
+```
+Strong Interview Signal<br>
+
+If the candidate mentions:<br>
+
+Preventing memory leaks<br>
+
+DOM manipulation timing<br>
+
+Change detection issues<br>
+
+It shows real-world experience.<br>
+
+# How do you implement routing with Guards? Provide a production scenario.
+
+
+Angular Router allows route protection using guards such as:<br>
+
+CanActivate<br>
+
+CanDeactivate<br>
+
+CanLoad<br>
+
+Example AuthGuard
+```ts
+@Injectable({ providedIn: 'root' })
+export class AuthGuard implements CanActivate {
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(): boolean {
+    if (this.authService.isAuthenticated()) {
+      return true;
+    }
+    this.router.navigate(['/login']);
+    return false;
+  }
+}
+
+Route Configuration
+{
+  path: 'dashboard',
+  component: DashboardComponent,
+  canActivate: [AuthGuard]
+}
+```
+Production Scenario<br>
+
+In a banking application:<br>
+
+Protect /dashboard<br>
+
+Validate JWT<br>
+
+Refresh token if expired<br>
+
+Redirect to login if invalid<br>
+
+Senior candidates may mention:<br>
+
+Role-based guards<br>
+
+Lazy loading + CanLoad<br>
+
+Guard returning Observable<boolean><br>
+
+# Why use Observables instead of Promises?
+
+
+Angular heavily uses RxJS.
+
+| Feature         | Promise | Observable                  |
+| --------------- | ------- | --------------------------- |
+| Multiple values | ❌       | ✅                           |
+| Cancellation    | ❌       | ✅                           |
+| Lazy execution  | ❌       | ✅                           |
+| Operators       | Limited | Rich (map, switchMap, etc.) |
+
+
+***When Obserables Are superior***<br>
+
+HTTP streams<br>
+
+WebSocket<br>
+
+Reactive forms<br>
+
+Real-time data<br>
+
+Promises are single-value and eager. Observables are lazy and cancelable.<br>
+
+# Explain pipe and takeUntil.
+pipe()<br>
+
+Used to chain operators:<br>
+```ts
+this.http.get('/api')
+  .pipe(
+    map(data => transform(data)),
+    catchError(err => of([]))
+  )
+  .subscribe();
+```
+takeUntil()<br>
+
+Prevents memory leaks:<br>
+```ts
+.pipe(takeUntil(this.destroy$))
+```
+
+Automatically unsubscribes when notifier emits.<br>
+
+# Example of chained (nested) calls — and how to avoid callback hell
+
+❌ Bad Practice (Nested Subscribe)<br>
+```ts
+this.service.getUser().subscribe(user => {
+  this.service.getOrders(user.id).subscribe(orders => {
+    console.log(orders);
+  });
+});
+```
+✅ Proper RxJS Approach<br>
+```ts
+this.service.getUser()
+  .pipe(
+    switchMap(user => this.service.getOrders(user.id))
+  )
+  .subscribe(orders => console.log(orders));
+```
+Senior Signal<br>
+
+If the candidate mentions:<br>
+
+switchMap vs mergeMap vs concatMap<br>
+
+Cancellation behavior<br>
+
+Avoiding race conditions<br>
+
+It shows strong RxJS knowledge.<br>
+
+🧠 State Management: Redux / NgRx<br>
+
+# Have you worked with Redux or NgRx? What is Redux?
+
+
+Redux is a predictable state container based on:<br>
+
+Single source of truth<br>
+
+Immutable state<br>
+
+Pure reducers<br>
+
+Actions describing state changes<br>
+
+In Angular, the equivalent is:<br>
+
+NgRx<br>
+
+# What problem does NgRx solve?
+
+
+NgRx is useful when:<br>
+
+Complex shared state<br>
+
+Multiple components depend on the same data<br>
+
+Need predictable state transitions<br>
+
+Time-travel debugging<br>
+
+Enterprise-scale applications<br>
+
+Core concepts: <br>
+
+| Concept  | Purpose                      |
+| -------- | ---------------------------- |
+| Store    | Global state container       |
+| Action   | Event describing change      |
+| Reducer  | Pure function updating state |
+| Effect   | Side effects (API calls)     |
+| Selector | Extract data from store      |
+
+Example Flow<br>
+
+Component dispatches Action<br>
+
+Reducer updates Store<br>
+
+Effect calls API<br>
+
+Selector reads updated state<br>
+
+Critical Perspective<br>
+
+Not every application needs NgRx.<br>
+
+Overusing Redux pattern in small apps introduces:<br>
+
+Boilerplate<br>
+
+Complexity<br>
+
+Learning curve<br>
+
+For small/medium apps:<br>
+
+Services + BehaviorSubject may suffice.<br>
+
+Strong candidates should question when to introduce global state management rather than blindly adopting it.<br>
+
+
 # Angular lifecycle
 
 An Angular component goes through a predictable lifecycle from its creation to its destruction. Developers can use lifecycle hook methods to execute custom logic at specific stages, such as initializing data, responding to input changes, and cleaning up resources. 
